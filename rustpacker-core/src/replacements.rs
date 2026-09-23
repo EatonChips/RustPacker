@@ -60,6 +60,7 @@ fn build_basic_replacements(
     replacements.insert("{{COMMON_MODULE}}", COMMON_MODULE_DECL.to_string());
     replacements.insert("{{DLL_MAIN}}", String::new());
     replacements.insert("{{DLL_FORMAT}}", String::new());
+    replacements.insert("{{SERVICE_MAIN}}", String::new());
     replacements
 }
 

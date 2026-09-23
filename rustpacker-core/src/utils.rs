@@ -105,7 +105,11 @@ pub fn get_source_binary_filename(
     format: &crate::config::Format,
     output_folder: &Path,
 ) -> PathBuf {
-    let binary_name = format!("{}.{}", execution.template_name(), format);
+    let extension = match format {
+        crate::config::Format::Exe | crate::config::Format::Service => "exe",
+        crate::config::Format::Dll => "dll",
+    };
+    let binary_name = format!("{}.{}", execution.template_name(), extension);
     let target_dir = "target/x86_64-pc-windows-gnu/release";
     output_folder.join(target_dir).join(binary_name)
 }
@@ -173,7 +177,11 @@ pub fn rename_source_binary(order: &crate::config::Order, output_folder_path: &P
         ));
     }
 
-    let random_filename = generate_random_filename(&order.format.to_string());
+    let extension = match order.format {
+        crate::config::Format::Exe | crate::config::Format::Service => "exe",
+        crate::config::Format::Dll => "dll",
+    };
+    let random_filename = generate_random_filename(extension);
     let release_dir = source_binary
         .parent()
         .context("Source binary has no parent directory")?;

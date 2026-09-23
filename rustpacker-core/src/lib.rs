@@ -13,6 +13,7 @@ pub mod obfuscation;
 pub mod pe_parser;
 pub mod replacements;
 pub mod sandbox;
+pub mod service;
 pub mod shellcode_reader;
 pub mod template_io;
 pub mod utils;

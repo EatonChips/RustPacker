@@ -13,6 +13,7 @@ use std::path::{Path, PathBuf};
 
 use crate::dll::{apply_dll_format, apply_proxy_config, apply_replacements};
 use crate::replacements::build_replacements;
+use crate::service::{add_service_dependency, apply_service_format, wrap_main_for_service};
 use crate::template_io::{copy_template, create_output_folder, get_template_path};
 
 /// Ensure no template placeholder remains in a generated file.
@@ -81,9 +82,18 @@ pub fn assemble(order: Order) -> Result<PathBuf> {
     let target_file = match order.format {
         Format::Dll => apply_dll_format(&mut replacements, &main_rs, is_proxy)?,
         Format::Exe => main_rs,
+        Format::Service => {
+            apply_service_format(&main_rs)?;
+            main_rs
+        }
     };
 
     apply_replacements(&replacements, &target_file, &cargo_toml)?;
+
+    if matches!(order.format, Format::Service) {
+        wrap_main_for_service(&target_file)?;
+        add_service_dependency(&cargo_toml)?;
+    }
 
     if is_proxy {
         apply_proxy_config(&order, &folder)?;
@@ -127,7 +137,7 @@ mod tests {
             Execution::NtVEH,
         ];
         let encryptions = [Encryption::Xor, Encryption::Aes, Encryption::Uuid];
-        let formats = [Format::Exe, Format::Dll];
+        let formats = [Format::Exe, Format::Dll, Format::Service];
 
         let mut combos = Vec::new();
         for &e in &executions {

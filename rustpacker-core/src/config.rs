@@ -180,6 +180,9 @@ pub enum Format {
     /// DLL format
     #[value(alias = "dll", alias = "DLL")]
     Dll,
+    /// Windows Service format (EXE that runs as a service)
+    #[value(alias = "service", alias = "SERVICE")]
+    Service,
 }
 
 impl fmt::Display for Format {
@@ -187,6 +190,7 @@ impl fmt::Display for Format {
         let s = match self {
             Format::Exe => "exe",
             Format::Dll => "dll",
+            Format::Service => "service",
         };
         write!(f, "{}", s)
     }
@@ -330,6 +334,7 @@ mod tests {
     fn test_format_display() {
         assert_eq!(format!("{}", Format::Exe), "exe");
         assert_eq!(format!("{}", Format::Dll), "dll");
+        assert_eq!(format!("{}", Format::Service), "service");
     }
 
     #[test]
