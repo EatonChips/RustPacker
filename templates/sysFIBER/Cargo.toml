@@ -17,7 +17,7 @@ winapi = { version = "0.3.9", features = ["ntdef", "ntstatus", "impl-default", "
 
 
 [dependencies.windows-sys]
-version = "0.61.2"
+version = "0.61"
 
 features = [
     "Win32_System_Memory",

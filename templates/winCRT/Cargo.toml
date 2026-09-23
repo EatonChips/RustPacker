@@ -14,7 +14,7 @@ sysinfo = "0.39.6"
 {{DEPENDENCIES}}
 
 [dependencies.windows]
-version = "0.62.2"
+version = "0.62"
 features = [
     "Win32_UI_Input_Pointer",
     "Win32_Foundation",

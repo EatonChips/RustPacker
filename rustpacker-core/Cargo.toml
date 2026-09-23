@@ -34,4 +34,4 @@ wat = "1.258"
 
 [dev-dependencies]
 tempfile = "3"
-wasmparser = "0.226"
+wasmparser = "0.259"
